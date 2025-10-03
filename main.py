@@ -31,6 +31,8 @@ if not os.getenv("GROQ_API_KEY"):
 
 # Configure Groq client
 try:
+    # Debug log to verify initialization arguments
+    logger.debug(f"Initializing Groq client with API key: {os.getenv('GROQ_API_KEY')}")
     groq_client = groq.Groq(api_key=os.getenv("GROQ_API_KEY"))
     logger.info("Successfully configured Groq API")
 except Exception as e:
@@ -148,7 +150,7 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
             ]
             
             response = groq_client.chat.completions.create(
-                model="llama3-1-8b",
+                model="llama-3.1-8b-instant",  # Updated to the latest supported model
                 messages=messages,
                 temperature=0.2,
                 max_tokens=512,
@@ -173,6 +175,39 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
         logger.error(f"{error_msg}\n{traceback.format_exc()}")
         raise RuntimeError(error_msg)
 
+from fastapi.middleware.cors import CORSMiddleware
+
+# Initialize FastAPI app with CORS middleware
 app = FastAPI()
 
-inngest.fast_api.serve(app, inngest_client, [rag_ingest_pdf, rag_query_pdf_ai])
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+# Register Inngest handler first
+inngest_handler = inngest.fast_api.serve(app, inngest_client, [rag_ingest_pdf, rag_query_pdf_ai])
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
+# Debug endpoint for Inngest
+@app.get("/api/inngest")
+async def inngest_debug():
+    try:
+        return {
+            "status": "active",
+            "functions": [
+                {"id": "RAG: Ingest PDF", "event": "rag/ingest_pdf"},
+                {"id": "RAG: Query PDF", "event": "rag/query_pdf_ai"}
+            ]
+        }
+    except Exception as e:
+        logger.error(f"Inngest debug endpoint error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

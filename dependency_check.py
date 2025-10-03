@@ -27,7 +27,7 @@ def check_groq_ai() -> Optional[str]:
             client = groq.Groq(api_key=api_key)
             # Test connection with a small request
             response = client.chat.completions.create(
-                model="llama3-1-8b",
+                model="llama-3.1-8b-instant",
                 messages=[{"role": "user", "content": "test"}],
                 temperature=0,
                 max_tokens=10

@@ -89,10 +89,10 @@ Key design principles:
 - **Workflows**: Inngest (v0.5.6+)
 - **RAG Framework**: LlamaIndex (core v0.14.0+, file readers v0.5.4+)
 - **Vector Database**: Qdrant Client (v1.15.1+)
-- **LLM**: Groq API (Llama 3.1 8B model)
+- **LLM**: Groq API (llama-3.1-8b-instant model)
 - **Embeddings**: Sentence Transformers (all-MiniLM-L6-v2)
 - **Utilities**: python-dotenv, Pydantic
-- **Python**: >=3.9
+- **Python**: >=3.13
 - **Project Management**: pip, requirements.txt
 
 ## Setup
@@ -137,14 +137,29 @@ Key design principles:
 
 ## Usage
 
-## Terminal 1 - Qdrant:
-docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+## Running the Services
 
-## Terminal 2 - Inngest:
-docker run -p 8288:8288 inngest/inngest
+Start each service in a separate terminal:
 
-## Terminal 3 - Your FastAPI Backend:
+### Terminal 1 - Qdrant Vector Database:
+```bash
+docker run -d --name qdrant -p 6333:6333 -p 6334:6334 qdrant/qdrant
+```
+
+### Terminal 2 - FastAPI Backend:
+```bash
 uvicorn main:app --reload --port 8000
+```
+
+### Terminal 3 - Inngest Dev Server:
+```bash
+npx inngest-cli@latest dev -u http://localhost:8000/api/inngest
+```
+
+### Terminal 4 - Streamlit Frontend:
+```bash
+streamlit run streamlit_app.py
+```
 
 
 1. **Ingest PDFs**:
@@ -159,6 +174,18 @@ uvicorn main:app --reload --port 8000
    - Submit: The app triggers a query event, waits for the workflow, and displays the answer with sources.
 
 Example Query: "What is the main topic of the document?" → Answer based on retrieved chunks + sources listed.
+
+## Demo
+
+Watch how the RAG application works in action:
+
+https://github.com/Mohamed-Noufal/production-RAG/raw/main/assets/video.mp4
+
+The video demonstrates:
+- PDF document upload and processing
+- Real-time document ingestion
+- Query processing and response generation
+- Context-aware answers with source citations
 
 ## Troubleshooting
 
