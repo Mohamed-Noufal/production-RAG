@@ -139,24 +139,58 @@ Key design principles:
 
 ## Running the Services
 
-Start each service in a separate terminal:
+You can run all services using Docker Compose or manually in separate terminals. Choose the option that best suits your needs:
 
-### Terminal 1 - Qdrant Vector Database:
+### Option 1: Using Docker Compose
+
+**Note on Storage Requirements**: 
+- The Docker setup requires approximately 6-7GB of storage space due to Python packages and model downloads.
+- If storage is a concern, consider using the manual development setup instead.
+
+1. Make sure you have Docker and Docker Compose installed.
+
+2. Create a `.env` file with your API keys:
+   ```
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+
+3. Start all services:
+   ```bash
+   docker compose up --build
+   ```
+
+This will start:
+- Qdrant on http://localhost:6333
+- FastAPI on http://localhost:8000
+- Streamlit on http://localhost:8501
+- Inngest Dev Server on http://localhost:8288
+
+To clean up and reclaim storage space when done:
+```bash
+docker compose down
+docker system prune --volumes  # This will remove unused containers, networks, and volumes
+```
+
+### Option 2: Manual Setup (Development)
+
+Start each service in separate terminals:
+
+#### Terminal 1 - Qdrant Vector Database:
 ```bash
 docker run -d --name qdrant -p 6333:6333 -p 6334:6334 qdrant/qdrant
 ```
 
-### Terminal 2 - FastAPI Backend:
+#### Terminal 2 - FastAPI Backend:
 ```bash
 uvicorn main:app --reload --port 8000
 ```
 
-### Terminal 3 - Inngest Dev Server:
+#### Terminal 3 - Inngest Dev Server:
 ```bash
 npx inngest-cli@latest dev -u http://localhost:8000/api/inngest
 ```
 
-### Terminal 4 - Streamlit Frontend:
+#### Terminal 4 - Streamlit Frontend:
 ```bash
 streamlit run streamlit_app.py
 ```

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Git
+.git
+.gitignore
+
+# Virtual environment
+venv/
+ENV/
+
+# VS Code
+.vscode/
+
+# Qdrant storage
+qdrant_storage/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.docker/
+
+# PDF uploads
+uploads/
+*.pdf
