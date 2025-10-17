@@ -63,14 +63,14 @@ Key design principles:
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Streamlit UI  │───▶│   FastAPI/Inngest│───▶│   Qdrant DB     │
-│ (Upload/Query)  │    │ (Workflows)      │    │ (Vectors/Payloads)
+│   Streamlit UI  │─── │  FastAPI/Inngest │─── │   Qdrant DB     │
+│ (Upload/Query)  │    │ (Workflows)      │    │(Vectors/Payloads)
 └─────────────────┘    └──────────────────┘    └─────────────────┘
                               │
                               ▼
                     ┌──────────────────┐    ┌──────────────────┐
                     │   Groq API       │    │ Sentence         │
-                    │ (Llama 3.1 8B)   │    │ Transformers    │
+                    │ (Llama 3.1 8B)   │    │ Transformers     │
                     └──────────────────┘    └──────────────────┘
                               │                     │
                               ▼                     ▼
