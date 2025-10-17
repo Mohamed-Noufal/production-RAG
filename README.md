@@ -2,16 +2,26 @@
 
 This is a production-ready Retrieval-Augmented Generation (RAG) application designed for ingesting PDF documents, storing them in a local vector database, and enabling semantic search and question-answering over the content. It leverages modern tools for scalability, async processing, and user-friendly interaction.
 
+## Demo
+
 <p align="center">
-  <video src="https://user-images.githubusercontent.com/YOUR_USER_ID/video.mp4" 
-         width="640" 
-         height="480" 
+  <video src="https://github.com/Mohamed-Noufal/production-RAG/raw/main/assets/video.mp4" 
+         width="800" 
+         height="450" 
          controls 
          style="max-width:100%; height:auto; border-radius:8px; border:1px solid #e1e4e8;">
     Your browser does not support the video tag.
   </video>
 </p>
 
+*Watch how the RAG application works in action*
+
+The video demonstrates:
+- PDF document upload and processing
+- Real-time document ingestion
+- Query processing and response generation
+- Context-aware answers with source citations
+- Troubleshooting
 
 ## Overview
 
