@@ -2,7 +2,7 @@
 
 This is a production-ready Retrieval-Augmented Generation (RAG) application designed for ingesting PDF documents, storing them in a local vector database, and enabling semantic search and question-answering over the content. It leverages modern tools for scalability, async processing, and user-friendly interaction.
   
-    
+     
 ## Overview
 
 The app allows users to:
